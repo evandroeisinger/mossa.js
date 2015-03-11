@@ -20,15 +20,25 @@ Just create a new instance of mossa.js for each element you want to move.
 ```
 
 ```javascript
-new Mossa(document.getElementsByTagName('figure')[0]);
+new Mossa(document.getElementsByTagName('figure')[0], {
+  onStartMoving: function(element, thumbnail) {
+    console.log('onStartMoving: ', element, thumbnail);
+  },
+  onDrop: function(element) {
+    console.log('onDrop: ', element);
+  }
+});
 ```
 ---
 ### constructor
 ```javascript
-new Mossa(DOMElement);
+new Mossa(DOMElement, options);
 ```
 ###### parameters
-  - **DOMElement**: the element that will be used for Mossa.js instantiation.
+  - **DOMElement**: the element that will be used for Mossa.js instantiation
+  - **options**
+    - *onStartMoving(element, thumbnail)*: callback called when the element start moving
+    - *onDrop(element)*: callback called when the element has been dropped
 
 ---
 ## support
