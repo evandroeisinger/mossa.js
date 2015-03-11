@@ -23,7 +23,14 @@
 
       for (var i = 0; i < article.children.length; i++)
         if (article.children[i].nodeName.toLowerCase() !== 'h1')
-          new Mossa(article.children[i]);
+          new Mossa(article.children[i], {
+            onStartMoving: function(element, thumbnail) {
+              console.log('onStartMoving: ', element, thumbnail);
+            },
+            onDrop: function(element) {
+              console.log('onDrop: ', element);
+            }
+          });
     })(document);
   </script>
 </body>
