@@ -10,13 +10,14 @@
 }(window, function() {
   'use strict';
 
-  function Mossa(element) {
+  function Mossa(element, options) {
     var self = this;
 
     if (!element || !element.children)
       return new Error('No element or valid element was passed!');
 
     element.draggable = false;
+    self.options = options || {};
     self.element = element;
     self.dropArea = self.createDropArea();
     self.button = self.getButton(element) || self.createButton();
@@ -25,8 +26,9 @@
 
     self.startMoving = function(e) {
       e.preventDefault();
+      var parent = self.element.parentElement,
+          child;
 
-      parent = self.element.parentElement;
       self.thumbnail = self.createThumbnail(self.element, e);
       self.elementSiblings = element.parentElement.children;
       self.element.style.display = 'none';
@@ -35,12 +37,16 @@
       self.insertThumbnail(self.thumbnail);
       
       for (var i = self.elementSiblings.length - 1; i >= 0; i--) {
-        self.elementSiblings[i].addEventListener('mouseover', self.addDropArea);
-        self.elementSiblings[i].addEventListener('mouseup', self.drop);
+        child = self.elementSiblings[i];
+        child.addEventListener('mouseover', self.addDropArea);
+        child.addEventListener('mouseup', self.drop);
       }
 
       document.addEventListener('mouseup', self.stopMoving);
       document.addEventListener('mousemove', self.move);
+
+      if (self.options.onStartMoving)
+        self.options.onStartMoving(self.element, self.thumbnail);
     }
 
     self.move = function(e) {
@@ -53,6 +59,8 @@
       e.preventDefault();
 
       self.insertElement(self.element, self.dropArea);
+      if (self.options.onDrop)
+        self.options.onDrop(self.element);
     }
 
     self.addDropArea = function(e) {
