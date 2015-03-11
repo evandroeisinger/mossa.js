@@ -1,0 +1,12 @@
+{
+  "name": "mossa",
+  "version": "1.0.0",
+  "author": "Evandro Eisinger <evandroeisinger@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evandroeisinger/mossa.js"
+  },
+  "scripts": {},
+  "license": "MIT",
+  "devDependencies": {}
+}
