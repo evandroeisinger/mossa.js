@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>mossa.js</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="example.css">
+</head>
+<body>
+  <a href="https://github.com/evandroeisinger/mossa.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+  <article>
+    <h1>mossa.js</h1>
+    <p>We gonna chung bizzle ligula, away sizzle amet, bow wow wow sizzle, sollicitudizzle nec, tortizzle. Maecenizzle a da bomb. Sizzle fizzle neque et risizzle. Gizzle erizzle. Yo aliquizzle mammasay mammasa mamma oo sa turpizzle. Tellivizzle blandit purizzle. Da bomb dolizzle things, pharetra interdum, posuere ut, owned bling bling, augue. Doggy shizzlin dizzle tellus. Aenizzle aliquam ghetto sit dawg dolor. Fusce fo shizzle felis own yo' arcu. Rizzle ipsizzle dolor sizzle we gonna chung, consectetuer tellivizzle elizzle. Daahng dawg massa mofo, shiznit the bizzle, shiznit , consequizzle break it down, the bizzle. Nizzle porta i saw beyonces tizzles and my pizzle went crizzle nunc.</p>
+    <figure>
+      <img src="example.jpg">
+    </figure>
+    <p>Izzle dolizzle. We gonna chung bizzle ligula, away sizzle amet, bow wow wow sizzle, sollicitudizzle nec, tortizzle. Maecenizzle a da bomb. Sizzle fizzle neque et risizzle. Gizzle erizzle. Yo aliquizzle mammasay mammasa mamma oo sa turpizzle. Tellivizzle blandit purizzle. Da bomb dolizzle things, pharetra interdum, posuere ut, owned bling bling, augue. Doggy shizzlin dizzle tellus. Aenizzle aliquam ghetto sit dawg dolor. Fusce fo shizzle felis own yo' arcu. Rizzle ipsizzle dolor sizzle we gonna chung, consectetuer tellivizzle elizzle. Daahng dawg massa mofo, shiznit the bizzle, shiznit , consequizzle break it down, the bizzle. Nizzle porta i saw beyonces tizzles and my pizzle went crizzle nunc.</p>
+  </article>
+  <script type="text/javascript" src="../src/mossa.js"></script>
+  <script type="text/javascript">
+    (function(document) {
+      var article = document.getElementsByTagName('article')[0],
+          mossaElements = [];
+
+      for (var i = 0; i < article.children.length; i++)
+        if (article.children[i].nodeName.toLowerCase() !== 'h1')
+          new Mossa(article.children[i]);
+    })(document);
+  </script>
+</body>
+</html>

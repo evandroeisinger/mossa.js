@@ -1,0 +1,82 @@
+body {
+  margin: 1rem 0;
+  padding: 0;
+  color: black;
+  font-size: 15px;
+  font-family: monospace;
+  letter-spacing: 0.2rem;
+  line-height: 2rem;
+}
+
+h1, h3, p, figure, .drop-placeholder {
+  position: relative;
+  display: block;
+  margin: 1rem 0;
+  background: white;
+}
+
+h1:hover .move-button, h3:hover .move-button, p:hover .move-button, figure:hover .move-button {
+  display: block;
+}
+
+h1:before, h3:before, p:before, figure:before {
+  content: '';
+  width: 3rem;
+  height: 100%;
+  position: absolute;
+  left: -3rem;
+  z-index: 0;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+article {
+  width: 50%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+figure img {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.drop-area {
+  border: .15rem dotted lightgray;
+  height: 2rem;
+}
+
+.move-button {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  margin-top: 0rem;
+  margin-left: -3rem;
+  border: 1px solid lightgray;
+  background: transparent;
+  cursor: move;
+  font-size: 1.25rem;
+  border-radius: .65rem;
+}
+
+.move-button:hover {
+  color: white;
+  background: black;
+  border-color: black;
+}
+
+.move-thumbnail {
+  box-sizing: border-box;
+  border-radius: .5rem;
+  opacity: .85;
+}
