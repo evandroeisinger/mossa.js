@@ -94,7 +94,10 @@
 
   Mossa.prototype = {
     insertElement: function(element, dropArea) {
-      dropArea.parentElement.insertBefore(element, dropArea);
+      var parent = dropArea.parentElement;
+
+      if (parent)
+        parent.insertBefore(element, dropArea);
     },
 
     insertButton: function(button, element) {
@@ -144,7 +147,10 @@
     },
 
     removeDropArea: function(dropArea) {
-      dropArea.parentElement.removeChild(dropArea);
+      var parent = dropArea.parentElement;
+      
+      if (parent)
+        parent.removeChild(dropArea);
     },
 
     removeThumbnail: function(thumbnail) {
@@ -157,13 +163,12 @@
     },
 
     getButton: function(element) {
-      if (element.children) {
+      if (element.children)
         for (var i = 0; i < element.children.length; i++) {
           var child = element.children[i];
           if ( child.nodeName.toLowerCase() == 'button' &&  child.className.indexOf('move-button') <= 0)
             return child;  
         }
-      }
 
       return false;
     }
