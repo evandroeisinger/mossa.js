@@ -19,7 +19,8 @@
     element.draggable = false;
     self.options = options || {};
     self.element = element;
-    self.dropArea = self.createDropArea();
+    self.topDropArea = self.createDropArea();
+    self.bottomDropArea = self.createDropArea();
     self.button = self.getButton(element) || self.createButton();
     self.thumbnail = null;
     self.elementSiblings = null;
@@ -32,18 +33,18 @@
       self.thumbnail = self.createThumbnail(self.element, e);
       self.elementSiblings = element.parentElement.children;
       self.element.style.display = 'none';
-      
+
       self.moveThumbnail(self.thumbnail, e);
       self.insertThumbnail(self.thumbnail);
-      
+
+      document.addEventListener('mouseup', self.stopMoving);
+      document.addEventListener('mousemove', self.move);
+
       for (var i = self.elementSiblings.length - 1; i >= 0; i--) {
         child = self.elementSiblings[i];
         child.addEventListener('mouseover', self.addDropArea);
         child.addEventListener('mouseup', self.drop);
       }
-
-      document.addEventListener('mouseup', self.stopMoving);
-      document.addEventListener('mousemove', self.move);
 
       if (self.options.onStartMoving)
         self.options.onStartMoving(self.element, self.thumbnail);
@@ -58,15 +59,16 @@
     self.drop = function(e) {
       e.preventDefault();
 
-      self.insertElement(self.element, self.dropArea);
+      self.insertElement(self.element, e.currentTarget);
+
       if (self.options.onDrop)
-        self.options.onDrop(self.element);
+        self.options.onDrop(self.element, e.currentTarget);
     }
 
     self.addDropArea = function(e) {
       e.preventDefault();
 
-      self.insertDropArea(self.dropArea, e.currentTarget);
+      self.insertDropArea(self.topDropArea, self.bottomDropArea, e.currentTarget);
     }
 
     self.stopMoving = function(e) {
@@ -74,18 +76,21 @@
 
       self.element.style.display = 'block';
       self.removeThumbnail(self.thumbnail);
-      self.removeDropArea(self.dropArea);
+      self.removeDropArea(self.topDropArea);
+      self.removeDropArea(self.bottomDropArea);
+
+      document.removeEventListener('mouseup', self.stopMoving);
+      document.removeEventListener('mousemove', self.move);
 
       for (var i = self.elementSiblings.length - 1; i >= 0; i--) {
         self.elementSiblings[i].removeEventListener('mouseover', self.addDropArea);
         self.elementSiblings[i].removeEventListener('mouseup', self.drop);
       }
 
-      document.removeEventListener('mouseup', self.stopMoving);
-      document.removeEventListener('mousemove', self.move);
     }
 
-    self.dropArea.addEventListener('mouseup', self.drop);
+    self.topDropArea.addEventListener('mouseup', self.drop);
+    self.bottomDropArea.addEventListener('mouseup', self.drop);
     self.button.addEventListener('mousedown', self.startMoving);
 
     // insert button
@@ -105,19 +110,22 @@
       document.body.appendChild(thumbnail);
     },
 
-    insertDropArea: function(dropArea, element) {
+    insertDropArea: function(topDropArea, bottomDropArea, element) {
       var parent = element.parentElement,
           sibling = element.nextSibling;
 
+      parent.insertBefore(topDropArea, element);
+
       if (sibling)
-        parent.insertBefore(dropArea, sibling);
+        parent.insertBefore(bottomDropArea, sibling);
       else
-        parent.appendChild(dropArea);
+        parent.appendChild(bottomDropArea);
     },
 
     createDropArea: function() {
       var dropArea = document.createElement('div');
       dropArea.className = 'drop-area';
+
       return dropArea;
     },
 
@@ -144,7 +152,8 @@
     },
 
     removeDropArea: function(dropArea) {
-      dropArea.parentElement.removeChild(dropArea);
+      if (dropArea.parentElement)
+        dropArea.parentElement.removeChild(dropArea);
     },
 
     removeThumbnail: function(thumbnail) {
@@ -161,7 +170,7 @@
         for (var i = 0; i < element.children.length; i++) {
           var child = element.children[i];
           if ( child.nodeName.toLowerCase() == 'button' &&  child.className.indexOf('move-button') <= 0)
-            return child;  
+            return child;
         }
       }
 
