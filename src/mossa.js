@@ -37,6 +37,7 @@
       self.moveThumbnail(self.thumbnail, e);
       self.insertThumbnail(self.thumbnail);
 
+      self.element.parentElement.addEventListener('mouseup', self.stopMoving);
       document.addEventListener('mouseup', self.stopMoving);
       document.addEventListener('mousemove', self.move);
 
@@ -79,6 +80,7 @@
       self.removeDropArea(self.topDropArea);
       self.removeDropArea(self.bottomDropArea);
 
+      self.element.parentElement.removeEventListener('mouseup', self.stopMoving);
       document.removeEventListener('mouseup', self.stopMoving);
       document.removeEventListener('mousemove', self.move);
 
@@ -99,10 +101,7 @@
 
   Mossa.prototype = {
     insertElement: function(element, dropArea) {
-      var parent = dropArea.parentElement;
-
-      if (parent)
-        parent.insertBefore(element, dropArea);
+      dropArea.parentElement.insertBefore(element, dropArea);
     },
 
     insertButton: function(button, element) {
@@ -155,10 +154,8 @@
     },
 
     removeDropArea: function(dropArea) {
-      var parent = dropArea.parentElement;
-
-      if (parent)
-        parent.removeChild(dropArea);
+      if (dropArea.parentElement)
+        dropArea.parentElement.removeChild(dropArea);
     },
 
     removeThumbnail: function(thumbnail) {
@@ -171,12 +168,13 @@
     },
 
     getButton: function(element) {
-      if (element.children)
+      if (element.children) {
         for (var i = 0; i < element.children.length; i++) {
           var child = element.children[i];
           if ( child.nodeName.toLowerCase() == 'button' &&  child.className.indexOf('move-button') <= 0)
             return child;
         }
+      }
 
       return false;
     }
