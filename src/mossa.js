@@ -43,6 +43,7 @@
 
       for (var i = self.elementSiblings.length - 1; i >= 0; i--) {
         child = self.elementSiblings[i];
+        console.log(child);
         child.addEventListener('mouseover', self.addDropArea);
         child.addEventListener('mouseup', self.drop);
       }
@@ -116,12 +117,12 @@
       var parent = element.parentElement,
           sibling = element.nextSibling;
 
-      parent.insertBefore(topDropArea, element);
-
       if (sibling)
         parent.insertBefore(bottomDropArea, sibling);
       else
         parent.appendChild(bottomDropArea);
+
+      parent.insertBefore(topDropArea, element);
     },
 
     createDropArea: function() {
